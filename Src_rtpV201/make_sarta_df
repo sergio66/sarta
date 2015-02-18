@@ -26,9 +26,7 @@ HDFLIB   = -L$(HDFHOME)/lib -lmfhdf -ldf -ljpeg -lz
 # RTP info
 # --------
 # set RTPHOME to point to the local RTP installation
-RTPHOME = /asl/packages/rtpV201_g80
-#RTPHOME = /asl/packages/rtpV201
-#RTPHOME = ../../rtpV201
+RTPHOME = ../../rtp/rtpV201
 
 # RTP library
 RTPLIB = -L$(RTPHOME)/lib -lrtp
