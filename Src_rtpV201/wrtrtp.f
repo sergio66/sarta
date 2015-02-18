@@ -108,7 +108,7 @@ C      Input parameters:
        REAL    RAD(MXCHAN)
 C
 C      Profile data structure
-       RECORD /RTPPROF/ PROF
+       TYPE(RTPPROF) PROF
 
 
 C-----------------------------------------------------------------------

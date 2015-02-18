@@ -467,10 +467,10 @@ C      used locally only
 C
 C      Profile data structure
        INTEGER  ISTAT
-       RECORD /RTPPROF/ PROF            ! profile
-       RECORD /RTPHEAD/ HEAD            ! header data
-       RECORD /RTPATTR/ HATT(MAXNATTR)  ! header attributes
-       RECORD /RTPATTR/ PATT(MAXNATTR)  ! profile attributes
+       TYPE(RTPPROF) PROF            ! profile
+       TYPE(RTPHEAD) HEAD            ! header data
+       TYPE(RTPATTR) HATT(MAXNATTR)  ! header attributes
+       TYPE(RTPATTR) PATT(MAXNATTR)  ! profile attributes
 C
 C      Boundary pressure levels
        COMMON /COMLEV/ PLEV

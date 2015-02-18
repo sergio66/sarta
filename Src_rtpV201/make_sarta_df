@@ -26,7 +26,9 @@ HDFLIB   = -L$(HDFHOME)/lib -lmfhdf -ldf -ljpeg -lz
 # RTP info
 # --------
 # set RTPHOME to point to the local RTP installation
-RTPHOME = ../../rtpV201
+RTPHOME = /asl/packages/rtpV201_g80
+#RTPHOME = /asl/packages/rtpV201
+#RTPHOME = ../../rtpV201
 
 # RTP library
 RTPLIB = -L$(RTPHOME)/lib -lrtp
@@ -47,7 +49,8 @@ RTPINC = -I$(RTPHOME)/include
 #
 OPT = -O
 FLIB =
-F77 = f77
+F77 = ifort
+#F77 = f77
 
 # ---
 # Sun:
@@ -65,11 +68,11 @@ F77 = f77
 #    -g    include symbol table info
 #    -N26  read big-endian binary files (needed for coefficient files)
 #    -N3   use embedded record lengths in binary files 
-OPT = -s -O -N3 -N26
-#OPT = -s -N3 -N26 -g -C
+#OPT = -s -O -N3 -N26
+##OPT = -s -N3 -N26 -g -C
 # Absoft requires the U77 library
-FLIB = -lU77
-F77 = /asl/opt/absoft/absoft10.0/bin/af77
+#FLIB = -lU77
+#F77 = /asl/opt/absoft/absoft10.0/bin/af77
 
 
 #-----------------------------
