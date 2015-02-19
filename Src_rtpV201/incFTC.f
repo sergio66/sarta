@@ -123,7 +123,6 @@ C                            add YOFFA,YOFFB,YOFMIN,YOFMAX,YOFDEF
 C 13 May 2008 Scott Hannon   Add CO2NTE and NTEBOT for non-LTE calc and
 C                            increase NNCOEF from 6 to 7
 C 12 May 2009 Scott Hannon   Add VTUNNG string; delete VCLOUD
-C 04 Aug 2009 Scott Hannon   Add FNSCAL for speccal text file
 
 
 !END====================================================================
@@ -192,9 +191,10 @@ C
        CHARACTER*40 VSCOEF  ! SARTA coefficient version
        CHARACTER*40 VTUNNG  ! optical depth tuning version
 C      version template    '#.## YYYY-MM-DD <--------comment------->'
-       PARAMETER( VSARTA = '1.08 2010-09-14 dual-freq cal20020830' )
-       PARAMETER( VSCOEF = 'AIRS 2008-05-07 m130x m140x CO2=370' )
-       PARAMETER( VTUNNG = 'v6 standard; refprof N2O x1/1.04' )
+       PARAMETER( VSARTA = '1.08 2010-09-14 dual-freq cal20050301' )
+       PARAMETER( VSCOEF = 'AIRS 2008-05-07 m130 m150 CO2=385' )
+c       PARAMETER( VTUNNG = 'v6 standard; refprof N2O x1/1.04' )
+       PARAMETER( VTUNNG = 'wcon nte' )
 
 C      *********
 C      VARIABLES
@@ -219,9 +219,9 @@ C      Current values (CODATA98 from NIST); agrees w/JPL Dec2000
        PARAMETER(  C1 = 1.191042722E-8)  ! JPL value is 1E+3 bigger
        PARAMETER(  C2 = 1.4387752)
 C
-       REAL CO2STD ! standard CO2 PPMV mixing ratio (370)
-C      Note: mean global CO2 approximately 370 in 2002
-       PARAMETER( CO2STD = 370.0 )
+       REAL CO2STD ! standard CO2 PPMV mixing ratio (385)
+C      Note: mean global CO2 approximately 385 in 2009
+       PARAMETER( CO2STD = 385.0 )
 C
        REAL  XSALT ! expected nominal satellite altitude (km)
        PARAMETER( XSALT = 705.0 )
@@ -233,7 +233,7 @@ C      -----------------------------------
        INTEGER MAXLAY ! # of layers (100)
        INTEGER   NSET ! # of coefficient data sets (7)
        INTEGER MXCHAN ! max total # of channels (2378)
-       INTEGER NFCOEF ! # of downwelling thermal "F" factor coefs 
+       INTEGER NFCOEF ! # of downwelling thermal "F" factor coefs
        INTEGER MXEMIS ! max # of input emis/rho data points
        INTEGER MAXPRO ! max # of user specified profiles
        INTEGER  MXGAS ! max # of gases in user profile
@@ -393,7 +393,6 @@ C      Used in part by modules: 12, 11, 10, 9, 7, 6, 5, 2b, 1b, 2a
        INTEGER MXCHNC ! max # of channels with CO2 pert coefs (1082)
        INTEGER   NCO2 ! number of CO2 coefficients
        PARAMETER(MXCHNC = 1082)
-c       PARAMETER(  NCO2 = 4)
        PARAMETER(  NCO2 = 5)
 C
 C
@@ -457,23 +456,24 @@ C      ----------------
        PARAMETER(FNFX  =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/fx.txt')
        PARAMETER(FNPREF=
-c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/profref_trace370')
-C      refprof N2O scaled by 1/1.04 for tuning purposes
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'profref_trace370tuned')
+     $ // 'profref_trace385')
+C      refprof N2O scaled by 1/1.04 for tuning purposes
+c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
+c     $ // 'profref_trace385tuned')
 C
 C      ----------------
 C      Double filenames
 C      ----------------
 Cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
        REAL YOFFA          ! yoffset for database "A"
-       CHARACTER*80 FACOF1 ! coef set1 
-       CHARACTER*80 FACOF2 ! coef set2 
-       CHARACTER*80 FACOF3 ! coef set3 
-       CHARACTER*80 FACOF4 ! coef set4 
-       CHARACTER*80 FACOF5 ! coef set5 
-       CHARACTER*80 FACOF6 ! coef set6 
-       CHARACTER*80 FACOF7 ! coef set7 
+       CHARACTER*80 FACOF1 ! coef set1
+       CHARACTER*80 FACOF2 ! coef set2
+       CHARACTER*80 FACOF3 ! coef set3
+       CHARACTER*80 FACOF4 ! coef set4
+       CHARACTER*80 FACOF5 ! coef set5
+       CHARACTER*80 FACOF6 ! coef set6
+       CHARACTER*80 FACOF7 ! coef set7
        CHARACTER*80 FACO2  ! coef CO2
        CHARACTER*80 FAN2O  ! coef N2O
        CHARACTER*80 FASO2  ! coef SO2
@@ -487,72 +487,69 @@ C
        PARAMETER(YOFFA=-13.0)
        PARAMETER(FACOF1=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set1_m130x370.dat')
+     $ // 'set1_m130.dat')
        PARAMETER(FACOF2=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set2_m130x370.dat')
+     $ // 'set2_m130.dat')
        PARAMETER(FACOF3=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set3_m130x370.dat')
+     $ // 'set3_m130.dat')
        PARAMETER(FACOF4=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set4_m130x370.dat')
+     $ // 'set4_m130.dat')
        PARAMETER(FACOF5=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set5_m130x370.dat')
+     $ // 'set5_m130.dat')
        PARAMETER(FACOF6=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set6_m130x370.dat')
+     $ // 'set6_m130.dat')
        PARAMETER(FACOF7=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set7_m130x370.dat')
+     $ // 'set7_m130.dat')
        PARAMETER(FACO2 =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'CO2_5term_m130x370.dat')
-c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-c     $ // 'CO2_m130x370.dat')
+     $ // 'CO2_5term_m130.dat')
        PARAMETER(FAN2O =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'N2O_m130x370.dat')
+     $ // 'N2O_m130.dat')
        PARAMETER(FASO2 =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'SO2_m130x370.dat')
+     $ // 'SO2_m130.dat')
        PARAMETER(FAHNO3 =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'HNO3_m130x370.dat')
+     $ // 'HNO3_m130.dat')
        PARAMETER(FAOPTR=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'optran_m130x370.dat')
+     $ // 'optran_m130.dat')
        PARAMETER(FATHER=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'therm_m130x370.dat')
+     $ // 'therm_m130.dat')
        PARAMETER(FACOFN=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'nonLTE7_m130x.dat')
+     $ // 'nonLTE7_m130.dat')
        PARAMETER(FASUN =
-     $ '/asl/data/sarta_database/Data_AIRS_apr08/Solar/solar_m130x.txt')
-C
+     $ '/asl/data/sarta_database/Data_AIRS_apr08/Solar/solar_m130.txt')
        PARAMETER(FATMLT=
-     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'tunmlt_m130x.txt')
+c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
+c     $ // 'tunmlt_m130.txt')
 ccc
 c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
 c     $ // 'tunmlt_ones.txt')
 ccc
-c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-c     $ // 'tunmlt_wcon_nte.txt')
+     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
+     $ // 'tunmlt_wcon_nte.txt')
 ccc
 C
 Cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 C
        REAL YOFFB          ! yoffset for database "B"
-       CHARACTER*80 FBCOF1 ! coef set1 
-       CHARACTER*80 FBCOF2 ! coef set2 
-       CHARACTER*80 FBCOF3 ! coef set3 
-       CHARACTER*80 FBCOF4 ! coef set4 
-       CHARACTER*80 FBCOF5 ! coef set5 
-       CHARACTER*80 FBCOF6 ! coef set6 
-       CHARACTER*80 FBCOF7 ! coef set7 
+       CHARACTER*80 FBCOF1 ! coef set1
+       CHARACTER*80 FBCOF2 ! coef set2
+       CHARACTER*80 FBCOF3 ! coef set3
+       CHARACTER*80 FBCOF4 ! coef set4
+       CHARACTER*80 FBCOF5 ! coef set5
+       CHARACTER*80 FBCOF6 ! coef set6
+       CHARACTER*80 FBCOF7 ! coef set7
        CHARACTER*80 FBCO2  ! coef CO2
        CHARACTER*80 FBN2O  ! coef N2O
        CHARACTER*80 FBSO2  ! coef SO2
@@ -563,75 +560,69 @@ C
        CHARACTER*80 FBSUN  ! solar data
        CHARACTER*80 FBTMLT ! tuning multiplier
 C
-       PARAMETER(YOFFB=-14.0)
+       PARAMETER(YOFFB=-15.0)
        PARAMETER(FBCOF1=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set1_m140x370.dat')
+     $ // 'set1_m150.dat')
        PARAMETER(FBCOF2=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set2_m140x370.dat')
+     $ // 'set2_m150.dat')
        PARAMETER(FBCOF3=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set3_m140x370.dat')
+     $ // 'set3_m150.dat')
        PARAMETER(FBCOF4=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set4_m140x370.dat')
+     $ // 'set4_m150.dat')
        PARAMETER(FBCOF5=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set5_m140x370.dat')
+     $ // 'set5_m150.dat')
        PARAMETER(FBCOF6=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set6_m140x370.dat')
+     $ // 'set6_m150.dat')
        PARAMETER(FBCOF7=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'set7_m140x370.dat')
+     $ // 'set7_m150.dat')
        PARAMETER(FBCO2 =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'CO2_5term_m140x370.dat')
-c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-c     $ // 'CO2_m140x370.dat')
+     $ // 'CO2_5term_m150.dat')
        PARAMETER(FBN2O =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'N2O_m140x370.dat')
+     $ // 'N2O_m150.dat')
        PARAMETER(FBSO2 =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'SO2_m140x370.dat')
+     $ // 'SO2_m150.dat')
        PARAMETER(FBHNO3 =
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'HNO3_m140x370.dat')
+     $ // 'HNO3_m150.dat')
        PARAMETER(FBOPTR=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'optran_m140x370.dat')
+     $ // 'optran_m150.dat')
        PARAMETER(FBTHER=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'therm_m140x370.dat')
+     $ // 'therm_m150.dat')
        PARAMETER(FBCOFN=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'nonLTE7_m140x.dat')
+     $ // 'nonLTE7_m150.dat')
        PARAMETER(FBSUN =
-     $ '/asl/data/sarta_database/Data_AIRS_apr08/Solar/solar_m140x.txt')
-C
+     $ '/asl/data/sarta_database/Data_AIRS_apr08/Solar/solar_m150.txt')
        PARAMETER(FBTMLT=
-     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'tunmlt_m140x.txt')
+c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
+c     $ // 'tunmlt_m150.txt')
 ccc
 c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
 c     $ // 'tunmlt_ones.txt')
 ccc
-c     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-c     $ // 'tunmlt_wcon_nte.txt')
+     $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
+     $ // 'tunmlt_wcon_nte.txt')
 ccc
+C
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
        CHARACTER*80 FNSCAL ! spectral calibration
        PARAMETER(FNSCAL=
      $ '/asl/data/sarta_database/Data_AIRS_apr08/Coef/'
-     $ // 'speccal_20020830.txt')
-c     $ // 'speccal_20030110.txt')
-c     $ // 'speccal_20021022.txt')
-c     $ // 'speccal_20020917.txt')
-c     $ // 'speccal_20020830.txt')
-c     $ // 'speccal_x.txt')
-C
+     $ // 'speccal_20050301.txt')
+c     $ // 'speccal_20031119.txt')
+c     $ // 'speccal_20050301.txt')
 C
 C      ----------------------
 C      Default & min/max YOFF
@@ -641,7 +632,7 @@ C      expected range of variation of YOFF
        REAL YOFDEF   ! default YOFF
        REAL YOFMIN   ! min allowed YOFF
        REAL YOFMAX   ! max allowed YOFF
-       PARAMETER(YOFDEF=-13.5)
+       PARAMETER(YOFDEF=-14.0)
        PARAMETER(YOFMIN=-16.0)
        PARAMETER(YOFMAX=-11.0)
 

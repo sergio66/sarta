@@ -208,7 +208,7 @@ C      Output parameters:
        REAL    ALT(MAXLAY)
 C
 C      Profile data structure
-       RECORD /RTPPROF/ PROF
+       TYPE(RTPPROF) PROF
 C
        INTEGER ISTAT
 
